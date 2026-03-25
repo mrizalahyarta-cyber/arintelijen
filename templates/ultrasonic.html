@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduKit - Deskripsi Ultrasonik</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            /* Gradasi warna khusus Ultrasonic (Ungu/Indigo) */
+            --primary-gradient: linear-gradient(135deg, #8b5cf6 0%, #4c1d95 100%);
+            --glow-color: rgba(139, 92, 246, 0.3);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top right, #1e3a8a, #0f172a 60%);
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+            padding: 35px 25px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-wrapper {
+            background: rgba(255, 255, 255, 0.1);
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: 45px;
+        }
+
+        .arrow {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .arrow:hover {
+            background: white;
+            color: #0f172a;
+        }
+
+        .hidden {
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .comp-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #a78bfa;
+            text-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+            flex-grow: 1;
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-box {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            padding: 20px 18px;
+            box-sizing: border-box;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            min-height: 140px;
+            resize: none;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-box:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .input-label {
+            position: absolute;
+            top: -10px;
+            left: 18px;
+            background-color: #1a253c;
+            padding: 0 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #94a3b8;
+            border-radius: 5px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px var(--glow-color);
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-wrapper">
+            <img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" alt="Logo" class="logo">
+        </div>
+
+        <h2>Deskripsi Sensor Ultrasonik</h2>
+
+        <div class="nav-section">
+            <button class="arrow" id="prevBtn" onclick="changeComponent(-1)">&lt;</button>
+            <span class="comp-name" id="componentTitle">Komponen 1</span>
+            <button class="arrow" id="nextBtn" onclick="changeComponent(1)">&gt;</button>
+        </div>
+
+        <div class="input-container">
+            <label class="input-label">📝 Deskripsi Komponen</label>
+            <textarea id="descInput" class="input-box" placeholder="Ketik deskripsi Anda di sini..."></textarea>
+        </div>
+
+        <button class="btn-submit" onclick="submitDataKeFlask()">Kirim Data ke Flask</button>
+        <br><br>
+        <a href="/" style="color: #94a3b8; font-size: 0.85rem; text-decoration: none;">← Kembali ke Dashboard</a>
+    </div>
+
+    <script>
+        let currentIndex = 1;
+        const maxComponents = 4;
+
+        // Daftar Komponen Sensor Ultrasonik (HC-SR04)
+        const componentNames = {
+            1: "Transmitter (Pemancar Gelombang)",
+            2: "Receiver (Penerima Gelombang)",
+            3: "Pin VCC & GND (Daya)",
+            4: "Pin Trigger & Echo"
+        };
+
+        function changeComponent(step) {
+            currentIndex += step;
+
+            const title = document.getElementById('componentTitle');
+            title.innerText = componentNames[currentIndex];
+
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (currentIndex === 1) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+
+            if (currentIndex === maxComponents) {
+                nextBtn.classList.add('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+            }
+
+            document.getElementById('descInput').value = "";
+        }
+
+        function submitDataKeFlask() {
+            const deskripsiIsi = document.getElementById('descInput').value;
+            const namaKomponenAktif = componentNames[currentIndex];
+
+            if (deskripsiIsi.trim() === "") {
+                alert("Harap isi deskripsi terlebih dahulu!");
+                return;
+            }
+
+            fetch('/api/submit-deskripsi', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    komponen: `Ultrasonik - ${namaKomponenAktif}`,
+                    deskripsi: deskripsiIsi
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === "sukses") alert(data.pesan);
+                else alert("Gagal: " + data.pesan);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Masalah jaringan!");
+            });
+        }
+
+        changeComponent(0);
+    </script>
+</body>
+</html>
